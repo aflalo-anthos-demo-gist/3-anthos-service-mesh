@@ -1,6 +1,6 @@
 # Anthos Service Mesh demo gist
 
-**DISCLAIMER : This repo is a cheat sheet, a lot of steps are missing for a full demo guide**
+## **DISCLAIMER : This repo is a cheat sheet, a lot of steps are missing for a full demo guide**
 
 ## Declare necessaries environment variables
 
