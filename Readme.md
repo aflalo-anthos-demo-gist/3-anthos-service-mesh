@@ -28,15 +28,56 @@ gcloud beta container clusters create ${CLUSTER_NAME} \
     --labels mesh_id=${MESH_ID}
 ```
 
+## Download installation script for Managed Control Plane
+
+1. Download the version of the script that installs Anthos Service Mesh 1.9.2 to the current working directory:
+
+```sh
+curl https://storage.googleapis.com/csm-artifacts/asm/install_asm_1.9 > install_asm
+```
+
+2. Download the SHA-256 of the file to the current working directory:
+
+```sh
+curl https://storage.googleapis.com/csm-artifacts/asm/install_asm_1.9.sha256 > install_asm.sha256
+```
+
+3. With both files in the same directory, verify the download:
+
+```sh
+sha256sum -c --ignore-missing install_asm.sha256
+```
+
+If the verification is successful, the command outputs: `install_asm: OK` For compatibility, the preceding command includes the `--ignore-missing` flag to allow any version of the script to be renamed to `install_asm`.
+
+4. Make the script executable:
+
+```sh
+chmod +x install_asm
+```
+
 ## Run install script
 
-Cf : `https://cloud.google.com/service-mesh/docs/scripted-install/gke-asm-onboard-1-7`
+```sh
+./install_asm \
+  --project_id PROJECT_ID \
+  --cluster_name CLUSTER_NAME \
+  --cluster_location CLUSTER_LOCATION \
+  --mode install \
+  --enable_all
+  ```
+
+
+More installation steps available here : [Installing Anthos Service Mesh](https://cloud.google.com/service-mesh/docs/scripted-install/gke-install)
 
 ## Enable Sidecar injection
 
+Before running this command, make sure you're setting ASM version accordingly to your install. More information : [Injecting sidecar proxies](https://cloud.google.com/service-mesh/docs/proxy-injection)
+
 ```sh
-kubectl label namespace default istio-injection- istio.io/rev=asm-173-6 --overwrite
+kubectl label namespace default istio-injection- istio.io/rev=asm-192-1 --overwrite
 ```
+
 
 ## Enable default destination rules
 
