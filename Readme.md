@@ -32,16 +32,15 @@ Cf : `https://cloud.google.com/service-mesh/docs/scripted-install/gke-asm-onboar
 
 ## Enable Sidecar injection
 
-```
+```sh
 kubectl label namespace default istio-injection- istio.io/rev=asm-173-6 --overwrite
 ```
 
 ## Enable default destination rules
 
-```
+```sh
 kubectl apply -f samples/bookinfo/networking/destination-rule-all-mtls.yaml
 ```
-
 
 ## Request routing example
 
@@ -56,14 +55,16 @@ kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
 ```sh
 kubectl get destinationrules -o yaml
 ```
+
 - Restrict users to `jason`for v2
 
 ```sh
 kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
 ```
+
 ## Fault injection
 
-Before starting : 
+Before starting :
 
 ```sh
 kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
@@ -84,7 +85,7 @@ Now we will test to inject an http abort fault
 kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml
 ```
 
-As we can see, when connected as Jason the service doesn't answer 
+As we can see, when connected as Jason the service doesn't answer
 
 ## Traffic Shifting
 
@@ -95,6 +96,7 @@ Now let's migrate 50% of the traffic to v3
 ```sh
 kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-50-v3.yaml
 ```
+
 If we consider the service stable we can migrate all the traffic to it :
 
 ```sh
@@ -104,6 +106,8 @@ kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-v3.yaml
 We saw here how we can support canary / green blue deployments
 
 ## Traffic mirroring
+
+Open a term with four windows
 
 - Create httpbin v1 and v2 deployments, service and a virtual service to route traffic to v1 only. Also create sleep pod :
 
@@ -115,7 +119,7 @@ kubectl apply -f httpbin-virtualsvc.yaml
 kubectl create -f sleep-deployment.yaml
 ```
 
-- Send some traffic adn monitor it
+- Send some traffic and check logs to see
 
 ```sh
 #Get Sleep pod and send traffic to app
